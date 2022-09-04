@@ -1,0 +1,50 @@
+
+Hello.
+
+Thanks for trusting us. Next you will find all configuration needed to
+setup your MyQttHub.com service:
+
+--== MQTT SERVER, PANEL AND API ==--
+
+              Panel: https://node02.myqtthub.com
+        MQTT Server: node02.myqtthub.com
+               Plan: Open
+
+           ClientId: michael.niepel@exxeta.com
+               User: michael.niepel
+           Password: duZjsttF-UjzbP9Y0
+             
+            TLS/SSL: enabled (port 8883)
+              Plain: enabled (port 1883) -- not recommended
+          HTTPS API: 443 ( https://support.asplhosting.com/t/rest-api-to-manage-myqtthub-service )
+  
+--== COMMUNITY SUPPORT AND FORUM ==--
+
+              Panel: https://support.asplhosting.com/c/myqtthub-en
+               User: michael.niepel (or email: michael.niepel@exxeta.com)
+           Password: duZjsttF-UjzbP9Y0
+
+    Use forum and community support
+    (https://support.asplhosting.com/c/myqtthub-en) as your primary
+    source of support.
+
+--== PAS PANEL (subscription and management platform, billing) ==--
+
+              Panel: https://pas.aspl.es
+               User: michael.niepel
+           Password: <Password configured at your registry>
+
+--== FIRST STEPS ==--
+
+    Please, visit following web page to get information about where to
+    start, how to create your devices, etc:
+
+    https://support.asplhosting.com/t/myqtthub-en-start-here
+
+--
+IMPORTANT NOTE: please, copy this message into a safe place. For security reasons
+                PAS will remove this message after 1 month.
+
+We hope you enjoy MyQttHub.com.
+Your ASPLhosting and MyQttHub.com team.
+https://asplhosting.com
