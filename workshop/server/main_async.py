@@ -101,11 +101,12 @@ async def on_message_received(client, messages, topic):
         decoded_message = json.loads(message.payload.decode())
         # control speed
         if topic == DISTANCE_TOPIC:
-            speed_message = {
-                "track": decoded_message.get("track"),
-                "speed": Racetrack.speed_from_distance(decoded_message.get("distance"))
-            }
-            await publish_speed(client, speed_message)
+            if RACETRACK.STATE == TrackState.RUNNING:
+                speed_message = {
+                    "track": decoded_message.get("track"),
+                    "speed": Racetrack.speed_from_distance(decoded_message.get("distance"))
+                }
+                await publish_speed(client, speed_message)
         elif topic == BUTTON_TOPIC:
             time = decoded_message.get("time")
             RACETRACK.button_pressed(time)
