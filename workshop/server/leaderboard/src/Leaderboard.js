@@ -77,7 +77,7 @@ const LastScoreForm = ({ data }) => {
 function Leaderboard() {
   const { isLoading, data } = useQuery("fetchLastScore", fetchLastScores, { refetchInterval: 1000 });
 
-  return !isLoading && (data[0].name == null ? <LastScoreForm data={data[0]} /> : <Table />);
+  return !isLoading && data.length > 0 && (data[0].name == null ? <LastScoreForm data={data[0]} /> : <Table />);
 }
 
 export default Leaderboard;

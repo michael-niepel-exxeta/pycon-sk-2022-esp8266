@@ -4,6 +4,7 @@ import json
 from asyncio_mqtt import Client, MqttError
 from contextlib import suppress
 from racetrack import Racetrack, TrackState
+import requests
 
 # pub
 SPEED_TOPIC = "speed"
@@ -21,6 +22,7 @@ LOG_FORMAT = "Received: {}"
 # racetrack state
 RACETRACK = None
 
+LEADERBOARD_API_URL = "http://localhost:8000/leaderboard/"
 
 async def racetrack():
     # Context manager
@@ -94,6 +96,14 @@ async def publish_lights(client, message: dict):
                          json.dumps(message),
                          qos=1)
 
+async def post_results(elapsed_seconds):
+    print(f"Posting to leaderboard: {elapsed_seconds}")
+    try:
+        requests.post(LEADERBOARD_API_URL, data=json.dumps({
+            "time": elapsed_seconds
+        }))
+    except Exception as e:
+        print(f"Unable to post time: {str(e)}")
 
 async def on_message_received(client, messages, topic):
     global RACETRACK
@@ -119,10 +129,11 @@ async def on_message_received(client, messages, topic):
                 await stop_race(client)
         elif topic == LAP_TOPIC:
             if RACETRACK.STATE == TrackState.RUNNING:
-                track_id = RACETRACK.lap(decoded_message.get("track"))
+                track_id, elapsed_seconds = RACETRACK.lap(decoded_message.get("track"), time=decoded_message.get("lap"))
                 if  track_id != -1:
                     print(f">>>> {track_id} wins!")
                     await stop_race(client)
+                    await post_results(elapsed_seconds)
         elif topic == OVERHEAT_TOPIC:
             temp = float(RACETRACK.lap(decoded_message.get("temp")))
             track_id = RACETRACK.overheat(decoded_message.get("track"))

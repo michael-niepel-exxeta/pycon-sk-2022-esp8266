@@ -18,8 +18,7 @@ def get_score(db: Session, score_id: int):
 
 def create_score(db: Session, score: schemas.ScoreCreate):
     created = datetime.now()
-    time = datetime.strptime(score.time, '%H:%M:%S.%f').time()
-    db_score = models.Score(time=time, created=created)
+    db_score = models.Score(time=score.time, created=created)
     db.add(db_score)
     db.commit()
     db.refresh(db_score)

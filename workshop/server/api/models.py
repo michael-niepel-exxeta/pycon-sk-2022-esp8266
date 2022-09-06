@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, String, DateTime, Time
+from sqlalchemy import Column, Integer, Float, String, DateTime
 
 from .database import Base
 
@@ -8,5 +8,5 @@ class Score(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    time = Column(Time)
+    time = Column(Float)
     created = Column(DateTime)

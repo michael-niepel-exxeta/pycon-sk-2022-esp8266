@@ -1,5 +1,5 @@
 from enum import Enum
-
+from datetime import datetime, timedelta
 class TrackState(Enum):
     IDLE = 0
     RUNNING = 1
@@ -29,20 +29,26 @@ class Racetrack():
 
     def start_race(self, time):
         self.STATE = TrackState.RUNNING
-        self.start_time = time
+        self.start_time = datetime.strptime(time, '%H:%M:%S.%f').time()
 
     def stop_race(self):
         self.STATE = TrackState.IDLE
         self.__init_laps()
         self.__init_overheat()
 
-    def lap(self, track_id):
+    def lap(self, track_id, time):
         self.laps[track_id] += 1
         print(f"Laps: {self.laps}")
         if self.laps[track_id] >= Racetrack.LAPS_TO_WIN:
+            lap_at_time = datetime.strptime(time, '%H:%M:%S.%f').time()
+            elapsed_time = timedelta(
+                hours=(lap_at_time.hour - self.start_time.hour),
+                minutes=(lap_at_time.minute - self.start_time.minute),
+                seconds=(lap_at_time.second - self.start_time.second),
+                microseconds=(lap_at_time.microsecond - self.start_time.microsecond))
             self.stop_race()
-            return track_id
-        return -1
+            return track_id, elapsed_time.total_seconds()
+        return -1, -1
 
     def overheat(self, track_id, overheat=True):
         self.overheat[track_id] = overheat

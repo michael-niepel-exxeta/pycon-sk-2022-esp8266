@@ -1,5 +1,5 @@
 from typing import Optional
-from datetime import datetime, time as dt_time
+from datetime import datetime
 from pydantic import BaseModel
 
 class ScoreBase(BaseModel):
@@ -15,7 +15,7 @@ class Score(ScoreBase):
     id: int
     created: datetime
     name: Optional[str]
-    time: dt_time
+    time: float
 
     class Config:
         orm_mode = True
