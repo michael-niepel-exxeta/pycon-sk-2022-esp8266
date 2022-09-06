@@ -104,9 +104,10 @@ async def on_message_received(client, messages, topic):
         # control speed
         if topic == DISTANCE_TOPIC:
             if RACETRACK.STATE == TrackState.RUNNING:
+                track_id = decoded_message.get("track")
                 speed_message = {
-                    "track": decoded_message.get("track"),
-                    "speed": Racetrack.speed_from_distance(decoded_message.get("distance"))
+                    "track": track_id,
+                    "speed": RACETRACK.speed_from_distance(decoded_message.get("distance"), track_id)
                 }
                 await publish_speed(client, speed_message)
         elif topic == BUTTON_TOPIC:
@@ -122,6 +123,14 @@ async def on_message_received(client, messages, topic):
                 if  track_id != -1:
                     print(f">>>> {track_id} wins!")
                     await stop_race(client)
+        elif topic == OVERHEAT_TOPIC:
+            temp = float(RACETRACK.lap(decoded_message.get("temp")))
+            track_id = RACETRACK.overheat(decoded_message.get("track"))
+            if RACETRACK.STATE == TrackState.RUNNING:
+                if temp >= Racetrack.OVERHEAT_IN_C:
+                    RACETRACK.overheat(track_id)
+                else:
+                    RACETRACK.overheat(track_id, False)
 
 
 async def cancel_tasks(tasks):
