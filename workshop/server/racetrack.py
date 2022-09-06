@@ -12,9 +12,11 @@ class Racetrack():
     MAX_DISTANCE = 50 # Max distance sensor distance we read
     DISTANCE_SPEED_RATIO = 2
 
+    SPEED_CONSTANT = 100
+
     INITIAL_SPEED = 80
 
-    LAPS_TO_WIN = 5
+    LAPS_TO_WIN = 20
 
     def __init__(self):
         self.STATE = TrackState.IDLE
@@ -50,7 +52,7 @@ class Racetrack():
         # distance is 0-50 cm, we want speed 0-90 inverted
         distance_inverted = Racetrack.MAX_DISTANCE - distance
 
-        speed = distance_inverted * Racetrack.DISTANCE_SPEED_RATIO
+        speed = Racetrack.SPEED_CONSTANT + (distance_inverted * Racetrack.DISTANCE_SPEED_RATIO)
 
         return int(speed)
 
