@@ -1,2 +1,7 @@
 paho-mqtt==1.6.1
 asyncio-mqtt==0.12.1
+
+# API
+fastapi==0.82.0
+uvicorn==0.18.3
+SQLAlchemy==1.4.40
