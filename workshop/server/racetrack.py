@@ -14,28 +14,35 @@ class Racetrack():
 
     INITIAL_SPEED = 80
 
+    LAPS_TO_WIN = 5
+
     def __init__(self):
         self.STATE = TrackState.IDLE
         self.start_time = None
+        self.__init_laps()
+
+    def start_race(self, time):
+        self.STATE = TrackState.RUNNING
+        self.start_time = time
+
+    def stop_race(self):
+        self.STATE = TrackState.IDLE
+        self.__init_laps()
+
+    def lap(self, track_id):
+        self.laps[track_id] += 1
+        print(f"Laps: {self.laps}")
+        if self.laps[track_id] >= Racetrack.LAPS_TO_WIN:
+            self.stop_race()
+            return track_id
+        return -1
+
+    def __init_laps(self):
         self.laps = {
             Racetrack.TRACK_0_ID: 0,
             Racetrack.TRACK_1_ID: 0
         }
 
-    # button state
-    def button_pressed(self, time):
-        if self.STATE == TrackState.IDLE:
-            self._start_race(time)
-        elif self.STATE == TrackState.RUNNING:
-            self._stop_race(time)
-
-    def _start_race(self, time):
-        self.STATE = TrackState.RUNNING
-        self.start_time = time
-
-    def _stop_race(self, time):
-        self.STATE = TrackState.IDLE
-        self.stop_time = time
 
     # speed from distance
     @staticmethod

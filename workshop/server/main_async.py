@@ -67,12 +67,14 @@ async def init_track(client):
 async def start_race(client, time):
     await publish_lights(client, {"command": "rsg"})
     await asyncio.sleep(3)
+    RACETRACK.start_race(time)
     msg = {"track": 0, "speed": Racetrack.INITIAL_SPEED}
     await publish_speed(client, msg)
     msg = {"track": 1, "speed": Racetrack.INITIAL_SPEED}
     await publish_speed(client, msg)
 
-async def stop_race(client, time):
+async def stop_race(client):
+    RACETRACK.stop_race()
     await publish_lights(client, {"command": "blink_red"})
     msg = {"track": 0, "speed": 0}
     await publish_speed(client, msg)
@@ -109,13 +111,17 @@ async def on_message_received(client, messages, topic):
                 await publish_speed(client, speed_message)
         elif topic == BUTTON_TOPIC:
             time = decoded_message.get("time")
-            RACETRACK.button_pressed(time)
             if RACETRACK.STATE == TrackState.IDLE:
-                # stop tracks
-                await stop_race(client, time)
+                await start_race(client, time)
             # publish initial speeds
             elif RACETRACK.STATE == TrackState.RUNNING:
-                await start_race(client, time)
+                await stop_race(client)
+        elif topic == LAP_TOPIC:
+            if RACETRACK.STATE == TrackState.RUNNING:
+                track_id = RACETRACK.lap(decoded_message.get("track"))
+                if  track_id != -1:
+                    print(f">>>> {track_id} wins!")
+                    await stop_race(client)
 
 
 async def cancel_tasks(tasks):
