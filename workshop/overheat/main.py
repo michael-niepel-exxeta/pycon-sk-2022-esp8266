@@ -19,11 +19,12 @@ async def heartbeat():
         s = not s
 
 async def wifi_han(state):
-    wifi_led(not state)
+    # wifi_led(not state)
     print('Wifi is ', 'up' if state else 'down')
     await asyncio.sleep(1)
 
 async def conn_han(_):
+    wifi_led(True)
     print('Client connected')
 
 async def main(client):

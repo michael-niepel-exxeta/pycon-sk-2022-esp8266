@@ -10,15 +10,18 @@ config['wifi_pw'] = ''
 def ledfunc(pin):
     pin = pin
     def func(v):
-        pin(not v)
+        if platform == 'esp8266':
+            pin(not v)
+        else:
+            pin(v)
     return func
-blue_led = ledfunc(Pin(2, Pin.OUT, value = 1))
+blue_led = ledfunc(Pin(2, Pin.OUT, value = 0))
 
 if platform == 'esp8266':
     # onboard blue led
     wifi_led = ledfunc(Pin(16, Pin.OUT, value = 1))
 elif platform == 'esp32':
     # pin 4 - D4
-    wifi_led = ledfunc(Pin(4, Pin.OUT, value = 1))
+    wifi_led = ledfunc(Pin(4, Pin.OUT, value = 0))
 else:
     wifi_led = blue_led
