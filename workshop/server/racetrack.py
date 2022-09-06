@@ -10,7 +10,7 @@ class Racetrack():
     TRACK_1_ID = 1
 
     MAX_DISTANCE = 50 # Max distance sensor distance we read
-    DISTANCE_SPEED_RATIO = 1.8
+    DISTANCE_SPEED_RATIO = 2
 
     INITIAL_SPEED = 80
 
