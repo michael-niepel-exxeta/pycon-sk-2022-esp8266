@@ -14,7 +14,7 @@ class Racetrack():
 
     SPEED_CONSTANT = 100
 
-    INITIAL_SPEED = 80
+    INITIAL_SPEED = SPEED_CONSTANT + 80
 
     LAPS_TO_WIN = 20
 
