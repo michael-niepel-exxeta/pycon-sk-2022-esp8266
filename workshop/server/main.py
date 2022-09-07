@@ -144,8 +144,8 @@ async def on_message_received(client, messages, topic):
                     await stop_race(client)
                     await post_results(elapsed_seconds)
         elif topic == OVERHEAT_TOPIC:
-            temp = float(RACETRACK.lap(decoded_message.get("temp")))
-            track_id = RACETRACK.overheat(decoded_message.get("track"))
+            temp = float(decoded_message.get("temp"))
+            track_id = decoded_message.get("track")
             if RACETRACK.STATE == TrackState.RUNNING:
                 if temp >= Racetrack.OVERHEAT_IN_C:
                     RACETRACK.overheat(track_id)

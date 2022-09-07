@@ -10,13 +10,13 @@ class Racetrack():
     TRACK_1_ID = 1
 
     MAX_DISTANCE = 50 # Max distance sensor distance we read
-    DISTANCE_SPEED_RATIO = 2
+    DISTANCE_SPEED_RATIO = 2.5
 
     SPEED_CONSTANT = 100
 
     INITIAL_SPEED = SPEED_CONSTANT + 80
 
-    LAPS_TO_WIN = 5
+    LAPS_TO_WIN = 10
 
     OVERHEAT_IN_C = 30
     OVERHEAT_SPEED_CRIPPLE = 50
@@ -50,8 +50,9 @@ class Racetrack():
             return track_id, elapsed_time.total_seconds()
         return -1, -1
 
-    def overheat(self, track_id, overheat=True):
-        self.overheat[track_id] = overheat
+    def overheat(self, track_id, overheated=True):
+        self.overheated[track_id] = overheated
+        print(f"Overheat: {self.overheated}")
 
     def __init_laps(self):
         self.laps = {
@@ -60,11 +61,10 @@ class Racetrack():
         }
 
     def __init_overheat(self):
-        self.overheat = {
+        self.overheated = {
             Racetrack.TRACK_0_ID: False,
             Racetrack.TRACK_1_ID: False
         }
-
 
     # speed from distance
     def speed_from_distance(self, distance, track_id):
@@ -72,9 +72,11 @@ class Racetrack():
         distance_inverted = Racetrack.MAX_DISTANCE - distance
 
         speed = Racetrack.SPEED_CONSTANT + (distance_inverted * Racetrack.DISTANCE_SPEED_RATIO)
+        print(f"Speed -> {speed}")
         # if car overheated 
-        if speed >= Racetrack.OVERHEAT_SPEED_CRIPPLE and self.overheat[track_id]:
+        if (speed >= Racetrack.OVERHEAT_SPEED_CRIPPLE) and self.overheated[track_id]:
             speed = speed - Racetrack.OVERHEAT_SPEED_CRIPPLE
+        print(f"Speed after overheated check -> {speed}")
 
         return int(speed)
 
