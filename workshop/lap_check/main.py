@@ -25,9 +25,14 @@ async def wifi_han(state):
     print('Wifi is ', 'up' if state else 'down')
     await asyncio.sleep(1)
 
+def sub_cb(topic, msg, retained):
+    print((topic, msg, retained))
+    ntptime.settime()
+
 async def conn_han(_):
     wifi_led(True)
     print('Client connected')
+    await client.subscribe('racetrack/sync_time', 1)
 
 async def main(client):
     try:
@@ -71,6 +76,7 @@ async def main(client):
 # Define configuration
 config['wifi_coro'] = wifi_han
 config['connect_coro'] = conn_han
+config['subs_cb'] = sub_cb
 config['server'] = SERVER
 
 # Credentials

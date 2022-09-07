@@ -9,6 +9,7 @@ import requests
 # pub
 SPEED_TOPIC = "speed"
 LIGHTS_TOPIC = "lights"
+SYNC_TIME_TOPIC = "sync_time"
 
 # sub
 DISTANCE_TOPIC = "distance"
@@ -68,6 +69,7 @@ async def init_track(client):
 
 async def start_race(client, time):
     await publish_lights(client, {"command": "rsg"})
+    await publish_sync_time(client)
     await asyncio.sleep(3)
     RACETRACK.start_race(time)
     msg = {"track": 0, "speed": Racetrack.INITIAL_SPEED}
@@ -94,6 +96,11 @@ async def publish_lights(client, message: dict):
     print(f"Publish: {message}")
     await client.publish(f"{TOPIC_ROOT}/{LIGHTS_TOPIC}",
                          json.dumps(message),
+                         qos=1)
+
+async def publish_sync_time(client):
+    await client.publish(f"{TOPIC_ROOT}/{SYNC_TIME_TOPIC}",
+                         b"True",
                          qos=1)
 
 async def post_results(elapsed_seconds):
