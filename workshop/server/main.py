@@ -64,6 +64,7 @@ async def init_track(client):
     msg = {"track": 0, "speed": 0}
     await publish_speed(client, msg)
     msg = {"track": 1, "speed": 0}
+    await publish_sync_time(client)
     await publish_speed(client, msg)
     await publish_lights(client, {"command": "blink_red"})
 
@@ -84,6 +85,7 @@ async def stop_race(client):
     await publish_speed(client, msg)
     msg = {"track": 1, "speed": 0}
     await publish_speed(client, msg)
+    await publish_sync_time(client)
 
 async def publish_speed(client, message: dict):
     print(f"Publish: {message}")
