@@ -16,7 +16,7 @@ class Racetrack():
 
     INITIAL_SPEED = SPEED_CONSTANT + 80
 
-    LAPS_TO_WIN = 20
+    LAPS_TO_WIN = 5
 
     OVERHEAT_IN_C = 30
     OVERHEAT_SPEED_CRIPPLE = 50
