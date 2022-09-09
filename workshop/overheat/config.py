@@ -3,8 +3,8 @@ from machine import Pin
 from mqtt_as import config
 
 # Not needed if you're only using ESP8266
-config['ssid'] = 'mynet_EXT'
-config['wifi_pw'] = ''
+config['ssid'] = 'PyConSK'
+config['wifi_pw'] = 'FIITpyconsk2022'
 
 
 def ledfunc(pin):
@@ -15,6 +15,8 @@ def ledfunc(pin):
         else:
             pin(v)
     return func
+
+
 blue_led = ledfunc(Pin(2, Pin.OUT, value = 0))
 
 if platform == 'esp8266':

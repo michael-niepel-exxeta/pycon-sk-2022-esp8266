@@ -53,11 +53,12 @@ def sub_cb(topic, msg, retained):
         reset()
 
 async def wifi_han(state):
-    wifi_led(not state)
+    # wifi_led(not state)
     print('Wifi is ', 'up' if state else 'down')
     await asyncio.sleep(1)
 
 async def conn_han(client):
+    wifi_led(True)
     await client.subscribe('racetrack/lights', 1)
 
 async def main(client):
