@@ -12,7 +12,7 @@ setup your MyQttHub.com service:
 
            ClientId: michael.niepel@exxeta.com
                User: michael.niepel
-           Password: duZjsttF-UjzbP9Y0
+           Password: <changed>
              
             TLS/SSL: enabled (port 8883)
               Plain: enabled (port 1883) -- not recommended
@@ -22,7 +22,7 @@ setup your MyQttHub.com service:
 
               Panel: https://support.asplhosting.com/c/myqtthub-en
                User: michael.niepel (or email: michael.niepel@exxeta.com)
-           Password: duZjsttF-UjzbP9Y0
+           Password: <changed>
 
     Use forum and community support
     (https://support.asplhosting.com/c/myqtthub-en) as your primary
